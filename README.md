@@ -18,9 +18,27 @@ Build a complete retail sales forecasting pipeline using classical machine learn
 - GitHub
 
 ## Project Status
+### ✅ Phase 0 — Project Setup
+- Project structure created
+- Virtual environment configured
+- Dependencies installed
+- Git repository initialized
+- VS Code development environment configured
 
-🚧 Project setup completed.
-Development in progress.
+### ✅ Phase 1 — Dataset Understanding
+- Business problem analysis
+- Dataset exploration
+- Feature understanding
+- Data quality assessment
+- Missing value analysis
+- Duplicate check
+- Modeling decisions documented
+
+### 🚧 Phase 2 — Data Cleaning (In Progress)
+- Merge datasets
+- Datetime conversion
+- Missing value handling
+- Data preprocessing
 
 ## Repository Structure
 
