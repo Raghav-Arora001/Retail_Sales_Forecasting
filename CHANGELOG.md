@@ -46,3 +46,62 @@ All notable changes to this project will be documented in this file.
 - Exclude closed-store records during model training.
 - Exclude `Customers` from modeling due to potential data leakage.
 - Preserve raw datasets; perform transformations only in preprocessing.
+
+# Phase 2 — Data Cleaning
+
+**Status:** Completed
+
+## Added
+
+* Merged `train.csv` and `store.csv` using a left join on the `Store` key.
+* Converted the `Date` column to `datetime64[ns]`.
+* Created a comprehensive missing value audit with counts and percentages.
+* Created `train_open_df` containing only open-store observations.
+* Saved processed datasets:
+
+  * `data/processed/merged_data.csv`
+  * `data/processed/train_open.csv`
+
+## Changed
+
+* Established a structured preprocessing workflow following an industry-inspired data science pipeline.
+* Introduced validation checkpoints after each major preprocessing step.
+* Preserved both the complete merged dataset and the modeling dataset for different downstream purposes.
+
+## Validated
+
+* Verified merge integrity by confirming row counts and successful store matching.
+* Confirmed `Date` conversion to `datetime64[ns]`.
+* Verified that Promo2-related missing values are structural rather than data quality issues.
+* Investigated competition-related missing values and documented observations.
+* Confirmed that the open-store dataset contains only records where `Open = 1`.
+* Verified that no duplicate rows were introduced during preprocessing.
+
+## Decisions
+
+* Deferred imputation of competition-related missing values until feature engineering.
+* Preserved structural missing values in Promo2-related columns.
+* Excluded closed-store records from the modeling dataset to avoid shortcut learning.
+* Retained the complete merged dataset for exploratory analysis and business reporting.
+* Saved processed datasets to improve reproducibility and eliminate redundant preprocessing in subsequent notebooks.
+
+# Phase 3 - Exploratory Data Analysis (11 July 2026)
+
+## Added
+- Performed comprehensive exploratory data analysis on the Rossmann dataset.
+- Analyzed sales distribution, seasonality, promotions, holidays, store characteristics, and competition.
+- Investigated customer behavior using exploratory customer metrics.
+- Documented key business insights and feature engineering roadmap.
+
+## Investigated
+- Sales trends across time and weekdays.
+- Impact of promotions, holidays, store types, assortment, and competition on sales.
+- Customer traffic and revenue per customer for key business drivers.
+- Competition timeline and Promo2-related features.
+- Structural missing values and unusual competition records.
+
+## Decisions
+- Retain customer-based analyses for business understanding only.
+- Exclude `Customers` from predictive modeling to prevent data leakage.
+- Engineer competition age and promotion duration features during preprocessing.
+- Handle structural missing values during feature engineering.
