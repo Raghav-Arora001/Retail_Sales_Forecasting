@@ -2184,3 +2184,103 @@ Promo2 only indicates participation in a recurring promotion program. IsPromoMon
 
 Incorrect features can introduce silent errors and negatively affect model performance.
 
+# Phase 5 Code & Function Reference
+
+## Pandas
+
+### sort_values()
+
+Used to order observations chronologically before creating the train-validation split.
+
+---
+
+### iloc
+
+Used to split the dataset based on row position.
+
+---
+
+### drop()
+
+Used to remove helper columns and separate the target variable.
+
+---
+
+### isna()
+
+Used to identify remaining missing values.
+
+---
+
+### loc[]
+
+Used for conditional replacement of missing values.
+
+---
+
+## Scikit-learn
+
+### ColumnTransformer
+
+Applies different preprocessing operations to different groups of features within a single reusable preprocessing object.
+
+---
+
+### OneHotEncoder
+
+Converts nominal categorical variables into binary indicator columns.
+
+Parameters used:
+
+* handle_unknown="ignore"
+* sparse_output=False
+
+---
+
+### fit()
+
+Learns preprocessing parameters from the training data only.
+
+Examples:
+
+* Learns categorical levels.
+* Stores encoding mappings.
+
+---
+
+### transform()
+
+Applies the learned preprocessing to any dataset without relearning.
+
+---
+
+### get_feature_names_out()
+
+Returns the complete list of transformed feature names after preprocessing.
+
+---
+
+### named_transformers_
+
+Provides access to fitted transformers inside a ColumnTransformer.
+
+Useful for inspection and debugging.
+
+---
+
+### categories_
+
+Displays the categories learned by a fitted OneHotEncoder.
+
+---
+
+## Concepts Learned
+
+* Temporal validation
+* Data leakage prevention
+* fit vs transform
+* One-Hot Encoding
+* ColumnTransformer
+* Model-ready datasets
+* Reusable preprocessing
+* Production ML workflow

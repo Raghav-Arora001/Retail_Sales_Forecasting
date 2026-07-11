@@ -13,7 +13,7 @@ Build a complete retail sales forecasting pipeline using classical machine learn
 - ✅ Phase 2 – Data Preparation
 - ✅ Phase 3 – Exploratory Data Analysis
 - ✅ Phase 4 – Feature Engineering
-- ⏳ Phase 5 – Data Preprocessing
+- ✅ Phase 5 – Data Preprocessing
 - ⏳ Phase 6 – Model Development
 - ⏳ Phase 7 – Model Evaluation
 - ⏳ Phase 8 – Dashboard & Deployment
@@ -70,6 +70,16 @@ Build a complete retail sales forecasting pipeline using classical machine learn
 - Feature validation
 - Feature engineering documentation
 
+### ✅ Phase 5 — Data Preprocessing
+
+- Removed temporary helper columns from feature engineering.
+- Created a chronological train-validation split to prevent temporal leakage.
+- Handled remaining missing values using sentinel-value imputation.
+- Designed a preprocessing strategy based on feature semantics.
+- Applied One-Hot Encoding to nominal categorical variables.
+- Built a reusable preprocessing workflow using `ColumnTransformer`.
+- Generated model-ready training and validation datasets.
+
 ## Repository Structure
 
 ```text
@@ -84,10 +94,13 @@ Retail-Sales-Forecasting/
 │   ├── 02_data_preparation.ipynb
 │   ├── 03_exploratory_data_analysis.ipynb
 │   ├── 04_feature_engineering.ipynb
+│   ├── 05_data_preprocessing.ipynb
 │
 ├── src/
 ├── reports/
 ├── models/
+│   ├── preprocessor.joblib
+│   
 ├── requirements.txt
 ├── README.md
 ├── CHANGELOG.md

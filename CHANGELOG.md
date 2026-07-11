@@ -128,3 +128,21 @@ All notable changes to this project will be documented in this file.
 
 - Documented feature engineering decisions.
 - Recorded business assumptions and validation process.
+
+## Phase 5 — Data Preprocessing
+
+### Added
+- Chronological train-validation split.
+- Reusable preprocessing pipeline using ColumnTransformer.
+- OneHotEncoder-based categorical encoding.
+- Model-ready datasets for training and validation.
+
+### Changed
+- Removed temporary helper columns.
+- Removed accidental PromoAgeMonths feature.
+- Dropped Date after temporal split.
+- Replaced missing CompetitionDistance values with sentinel value (-1).
+
+### Notes
+Completed preprocessing workflow and prepared the project for model development.
+
