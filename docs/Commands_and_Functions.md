@@ -1352,3 +1352,835 @@ If I had to summarize Phases 2 and 3 into the most valuable takeaways, they woul
 
 ---
 
+
+# Phase 4 Code Reference — Feature Engineering
+
+This document contains the important Python, Pandas functions, methods, and programming concepts used during Phase 4 — Feature Engineering.
+
+The objective is not only to remember syntax but to understand:
+
+* Why the function was used.
+* What problem it solved.
+* How it contributed to feature creation.
+* Common mistakes and interview considerations.
+
+---
+
+# 1. Datetime Feature Extraction
+
+## `.dt` Datetime Accessor
+
+### Purpose
+
+The `.dt` accessor allows extraction of individual components from a Pandas datetime column.
+
+In this project, it was used to convert raw transaction dates into meaningful calendar features.
+
+Example:
+
+```python
+train_open_df["Year"] = train_open_df["Date"].dt.year
+```
+
+---
+
+### Features Created Using `.dt`
+
+Created:
+
+* Year
+* Month
+* Day
+* Quarter
+* WeekOfYear
+* IsMonthStart
+* IsMonthEnd
+* IsWeekend
+
+---
+
+# `.dt.year`
+
+## Purpose
+
+Extracts the year component from a datetime column.
+
+Example:
+
+```python
+2015-07-01 → 2015
+```
+
+Used for:
+
+```python
+Year
+```
+
+---
+
+## Business Reason
+
+Year allows the model to learn long-term yearly trends.
+
+---
+
+# `.dt.month`
+
+## Purpose
+
+Extracts month number.
+
+Example:
+
+```python
+2015-07-01 → 7
+```
+
+Used for:
+
+```python
+Month
+```
+
+---
+
+## Business Reason
+
+Retail sales often have monthly seasonality due to:
+
+* Holidays
+* Weather
+* Shopping cycles
+
+---
+
+# `.dt.day`
+
+## Purpose
+
+Extracts day of month.
+
+Example:
+
+```python
+2015-07-15 → 15
+```
+
+Used for:
+
+```python
+Day
+```
+
+---
+
+# `.dt.quarter`
+
+## Purpose
+
+Returns quarter of year.
+
+Output:
+
+```
+1,2,3,4
+```
+
+Example:
+
+January → Q1
+
+---
+
+## Business Reason
+
+Captures broader seasonal periods.
+
+---
+
+# `.dt.isocalendar()`
+
+## Purpose
+
+Returns ISO calendar information.
+
+Example:
+
+```python
+df["Date"].dt.isocalendar()
+```
+
+Returns:
+
+* ISO year
+* ISO week
+* ISO weekday
+
+---
+
+Used:
+
+```python
+.dt.isocalendar().week
+```
+
+to create:
+
+```python
+WeekOfYear
+```
+
+---
+
+## Why ISO Week Was Used
+
+Normal calendar weeks can vary around year boundaries.
+
+ISO weeks provide consistent week numbering.
+
+---
+
+# `.dt.is_month_start`
+
+## Purpose
+
+Checks whether date is the first day of a month.
+
+Returns:
+
+Boolean
+
+Example:
+
+```
+True
+False
+```
+
+Used:
+
+```python
+IsMonthStart
+```
+
+---
+
+# `.dt.is_month_end`
+
+## Purpose
+
+Checks whether date is the last day of a month.
+
+Used:
+
+```python
+IsMonthEnd
+```
+
+---
+
+# `.dt.dayofweek`
+
+## Purpose
+
+Returns weekday number.
+
+Mapping:
+
+```
+Monday = 0
+Tuesday = 1
+...
+Sunday = 6
+```
+
+---
+
+Used with:
+
+```python
+.isin([5,6])
+```
+
+to identify weekends.
+
+---
+
+# 2. Boolean Feature Creation
+
+# `.isin()`
+
+## Purpose
+
+Checks whether values belong to a collection.
+
+Example:
+
+```python
+dayofweek.isin([5,6])
+```
+
+Output:
+
+```
+True
+False
+```
+
+---
+
+## Project Usage
+
+Used to create:
+
+```python
+IsWeekend
+```
+
+Logic:
+
+```
+Saturday OR Sunday → True
+Other days → False
+```
+
+---
+
+# `.notna()`
+
+## Purpose
+
+Checks whether values are not missing.
+
+Example:
+
+```python
+df["CompetitionDistance"].notna()
+```
+
+---
+
+## Project Usage
+
+Created:
+
+```python
+CompetitionInfoAvailable
+```
+
+Logic:
+
+```
+Competition information exists → True
+Missing → False
+```
+
+---
+
+# 3. Datetime Construction
+
+# `pd.to_datetime()`
+
+## Purpose
+
+Converts strings or numbers into Pandas datetime objects.
+
+---
+
+## Project Usage
+
+Created:
+
+* CompetitionOpenDate
+* Promo2StartDate
+
+Example:
+
+```python
+pd.to_datetime(date_string)
+```
+
+---
+
+## Common Mistake
+
+Incorrect date parsing can silently create incorrect features.
+
+Always validate:
+
+```python
+df["date"].min()
+df["date"].max()
+```
+
+---
+
+# ISO Date Formatting
+
+Used when creating Promo2 start dates.
+
+Format:
+
+```python
+"%G-W%V-%u"
+```
+
+Meaning:
+
+| Code | Meaning     |
+| ---- | ----------- |
+| %G   | ISO year    |
+| %V   | ISO week    |
+| %u   | ISO weekday |
+
+Example:
+
+```
+2015-W10-1
+```
+
+means:
+
+Monday of ISO week 10 in 2015.
+
+---
+
+# 4. String Operations
+
+# `.str.zfill()`
+
+## Purpose
+
+Adds leading zeros to strings.
+
+Example:
+
+Before:
+
+```
+5
+```
+
+After:
+
+```
+05
+```
+
+---
+
+## Project Usage
+
+Used while constructing ISO week dates.
+
+---
+
+# `.dt.strftime()`
+
+## Purpose
+
+Formats datetime values into strings.
+
+Example:
+
+```python
+df["Date"].dt.strftime("%b")
+```
+
+Output:
+
+```
+Jan
+Feb
+Mar
+```
+
+---
+
+## Project Usage
+
+Created:
+
+```python
+TransactionMonth
+```
+
+Used for comparing:
+
+* Transaction month
+* PromoInterval
+
+---
+
+# 5. Conditional Assignment
+
+# `.loc[]`
+
+## Purpose
+
+Allows selection and modification of specific rows and columns.
+
+Syntax:
+
+```python
+df.loc[row_condition, column]
+```
+
+---
+
+## Project Usage
+
+Used for:
+
+* Applying business rules
+* Assigning sentinel values
+* Updating engineered features
+
+Example:
+
+```python
+df.loc[df["CompetitionAgeMonths"] < 0,
+       "CompetitionAgeMonths"] = 0
+```
+
+---
+
+# Common Mistake
+
+Avoid chained indexing:
+
+Incorrect:
+
+```python
+df[df["A"]>0]["B"]=value
+```
+
+Correct:
+
+```python
+df.loc[df["A"]>0,"B"]=value
+```
+
+---
+
+# `.mask()`
+
+## Purpose
+
+Conditionally replaces values.
+
+Example:
+
+```python
+series.mask(condition, replacement)
+```
+
+---
+
+## Project Usage
+
+Used for:
+
+Negative duration correction.
+
+Example:
+
+Invalid:
+
+```
+CompetitionAgeMonths = -50
+```
+
+Converted to:
+
+```
+0
+```
+
+---
+
+# 6. Row-wise Operations
+
+# `.apply()`
+
+## Purpose
+
+Applies a function along rows or columns.
+
+---
+
+## Project Usage
+
+Used to create:
+
+```python
+IsPromoMonth
+```
+
+because each row required comparison between:
+
+* Store promotion schedule
+* Transaction month
+
+---
+
+## Important Consideration
+
+`.apply()` is slower than vectorized operations.
+
+It should not be used unnecessarily.
+
+---
+
+# `lambda`
+
+## Purpose
+
+Creates small anonymous functions.
+
+Example:
+
+```python
+lambda x: x+1
+```
+
+---
+
+## Project Usage
+
+Used inside `.apply()`.
+
+---
+
+# `pd.notna()`
+
+## Purpose
+
+Checks whether a value is not missing.
+
+Used inside lambda logic.
+
+---
+
+# 7. Validation Functions
+
+Feature engineering requires validation before model training.
+
+---
+
+# `.describe()`
+
+## Purpose
+
+Generates statistical summary.
+
+Checks:
+
+* Mean
+* Standard deviation
+* Min
+* Max
+* Percentiles
+
+---
+
+## Project Usage
+
+Used to validate:
+
+* CompetitionAgeMonths
+* Promo2AgeMonths
+
+---
+
+# `.value_counts()`
+
+## Purpose
+
+Counts unique values.
+
+Example:
+
+```python
+df["IsPromoMonth"].value_counts()
+```
+
+---
+
+Used to validate boolean features.
+
+---
+
+# `.info()`
+
+## Purpose
+
+Displays:
+
+* Data types
+* Missing values
+* Memory usage
+
+---
+
+Used after feature creation to verify:
+
+* Correct dtypes
+* No unexpected missing values
+
+---
+
+# `.isna().sum()`
+
+## Purpose
+
+Counts missing values column-wise.
+
+Example:
+
+```python
+df.isna().sum()
+```
+
+---
+
+Used for feature validation.
+
+---
+
+# `.nlargest()`
+
+## Purpose
+
+Returns largest values.
+
+Used for:
+
+* Investigating outliers
+* Checking abnormal durations
+
+---
+
+# `.nsmallest()`
+
+## Purpose
+
+Returns smallest values.
+
+Used for:
+
+* Finding negative values
+* Debugging incorrect calculations
+
+---
+
+# 8. Important Programming Concepts Learned
+
+## Feature Engineering
+
+Transforming raw data into meaningful model inputs.
+
+---
+
+## Temporal Features
+
+Extracting time-related patterns:
+
+Examples:
+
+* Month
+* Week
+* Quarter
+* Weekend
+
+---
+
+## Duration Features
+
+Representing elapsed influence.
+
+Examples:
+
+Instead of:
+
+```
+CompetitionOpenSinceYear
+```
+
+use:
+
+```
+CompetitionAgeMonths
+```
+
+---
+
+## Business Semantics
+
+Features should represent real-world processes.
+
+---
+
+## Helper Columns
+
+Temporary columns used to simplify calculations.
+
+Examples:
+
+* CompetitionOpenDate
+* Promo2StartDate
+* TransactionMonth
+
+---
+
+## Sentinel Values
+
+Special values representing meaningful missing states.
+
+Examples:
+
+```
+-1 → Information unavailable
+0 → Valid state where event has not started
+```
+
+---
+
+## Feature Validation
+
+Checking:
+
+* Correct values
+* Correct ranges
+* Correct data types
+* Correct business logic
+
+before modeling.
+
+---
+
+# Interview Questions
+
+## Why did you create CompetitionAgeMonths instead of using CompetitionOpenSinceYear?
+
+Because elapsed competition duration better represents competitive influence than a raw historical date.
+
+---
+
+## Why did you use sentinel values?
+
+Because missing values represented different business states, not random missing data.
+
+---
+
+## Why was IsPromoMonth required when Promo2 already existed?
+
+Promo2 only indicates participation in a recurring promotion program. IsPromoMonth captures whether the promotion was active during the transaction period.
+
+---
+
+## Why validate features before training?
+
+Incorrect features can introduce silent errors and negatively affect model performance.
+

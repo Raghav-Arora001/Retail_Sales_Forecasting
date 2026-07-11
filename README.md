@@ -12,10 +12,11 @@ Build a complete retail sales forecasting pipeline using classical machine learn
 - ✅ Phase 1 – Dataset Understanding
 - ✅ Phase 2 – Data Preparation
 - ✅ Phase 3 – Exploratory Data Analysis
-- ⏳ Phase 4 – Feature Engineering & Preprocessing
-- ⏳ Phase 5 – Model Development
-- ⏳ Phase 6 – Model Evaluation
-- ⏳ Phase 7 – Dashboard & Deployment
+- ✅ Phase 4 – Feature Engineering
+- ⏳ Phase 5 – Data Preprocessing
+- ⏳ Phase 6 – Model Development
+- ⏳ Phase 7 – Model Evaluation
+- ⏳ Phase 8 – Dashboard & Deployment
 
 ## Tech Stack
 
@@ -29,6 +30,7 @@ Build a complete retail sales forecasting pipeline using classical machine learn
 - GitHub
 
 ## Project Status
+
 ### ✅ Phase 0 — Project Setup
 - Project structure created
 - Virtual environment configured
@@ -45,20 +47,28 @@ Build a complete retail sales forecasting pipeline using classical machine learn
 - Duplicate check
 - Modeling decisions documented
 
-### ✅ Phase 2 — Data Cleaning 
-- Merge datasets
+### ✅ Phase 2 — Data Preparation
+- Dataset merging
 - Datetime conversion
 - Missing value handling
-- Data preprocessing
+- Data cleaning
+- Closed-store filtering
 
-### ✅ Phase 3 - Exploratory Data Analysis (EDA)
+### ✅ Phase 3 — Exploratory Data Analysis (EDA)
+- Sales distribution analysis
+- Store-level analysis
+- Promotion analysis
+- Holiday impact analysis
+- Business hypothesis generation
+- Customer behaviour insights
 
-- Project setup and reproducible development environment.
-- Dataset understanding and business problem analysis.
-- Data preparation and filtering of closed stores.
-- Comprehensive exploratory data analysis.
-- Business hypothesis generation and validation.
-- Customer behavior analysis for explanatory insights.
+### ✅ Phase 4 — Feature Engineering
+- Calendar feature extraction
+- Competition feature engineering
+- Promotion feature engineering
+- Business-driven duration features
+- Feature validation
+- Feature engineering documentation
 
 ## Repository Structure
 
@@ -73,6 +83,7 @@ Retail-Sales-Forecasting/
 │   ├── 01_data_understanding.ipynb
 │   ├── 02_data_preparation.ipynb
 │   ├── 03_exploratory_data_analysis.ipynb
+│   ├── 04_feature_engineering.ipynb
 │
 ├── src/
 ├── reports/
