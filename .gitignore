@@ -23,3 +23,7 @@ Thumbs.db
 
 # Processed datasets
 data/processed/*.csv
+
+# Ignore trained models
+models/*.joblib
+models/*.pkl

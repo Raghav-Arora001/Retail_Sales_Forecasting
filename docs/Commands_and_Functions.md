@@ -2284,3 +2284,130 @@ Displays the categories learned by a fitted OneHotEncoder.
 * Model-ready datasets
 * Reusable preprocessing
 * Production ML workflow
+
+
+
+# Phase 6
+
+## 1. Input Data
+
+**Key Components**
+
+| Code                                                  | Purpose                                                                    |
+| ----------------------------------------------------- | -------------------------------------------------------------------------- |
+| `pd.read_csv()`                                       | Load the engineered training dataset.                                      |
+| `train_test_split` (chronological split from Phase 5) | Preserve temporal ordering and prevent data leakage.                       |
+| `ColumnTransformer`                                   | Apply identical preprocessing to every model.                              |
+| `fit_transform()`                                     | Learn preprocessing transformations from the training set.                 |
+| `transform()`                                         | Apply the learned transformations to the validation set without refitting. |
+
+---
+
+## 2. Baseline Model – Dummy Regressor
+
+**Key Components**
+
+| Code                              | Purpose                                                |
+| --------------------------------- | ------------------------------------------------------ |
+| `DummyRegressor(strategy="mean")` | Predict the average sales value as a baseline.         |
+| `fit()`                           | Train the baseline model.                              |
+| `predict()`                       | Generate baseline predictions.                         |
+| `mean_absolute_error()`           | Measure average prediction error.                      |
+| `root_mean_squared_error()`       | Measure error magnitude while penalizing large errors. |
+| `r2_score()`                      | Measure the variance explained by the model.           |
+
+---
+
+## 3. Linear Regression
+
+**Key Components**
+
+| Code                 | Purpose                                                       |
+| -------------------- | ------------------------------------------------------------- |
+| `LinearRegression()` | Train the linear benchmark model.                             |
+| `fit()`              | Learn linear relationships between features and sales.        |
+| `predict()`          | Generate validation predictions.                              |
+| `evaluate_model()`   | Compute MAE, RMSE, and R² using a common evaluation function. |
+
+---
+
+## 4. Random Forest Regressor
+
+**Key Components**
+
+| Code                      | Purpose                                        |
+| ------------------------- | ---------------------------------------------- |
+| `RandomForestRegressor()` | Train a nonlinear ensemble model.              |
+| `n_estimators`            | Control the number of trees in the forest.     |
+| `max_depth`               | Control tree complexity and study overfitting. |
+| `fit()`                   | Train the ensemble model.                      |
+| `predict()`               | Generate sales forecasts.                      |
+| `evaluate_model()`        | Compare performance with previous models.      |
+
+---
+
+## 5. XGBoost Regressor
+
+**Key Components**
+
+| Code               | Purpose                                              |
+| ------------------ | ---------------------------------------------------- |
+| `XGBRegressor()`   | Train the final gradient boosting model.             |
+| `learning_rate`    | Control the contribution of each boosting iteration. |
+| `subsample`        | Improve generalization through row sampling.         |
+| `colsample_bytree` | Improve robustness through feature sampling.         |
+| `fit()`            | Train the boosting model.                            |
+| `predict()`        | Generate final sales predictions.                    |
+| `evaluate_model()` | Evaluate forecasting performance on unseen data.     |
+
+---
+
+## 6. Model Comparison
+
+**Key Components**
+
+| Code                    | Purpose                                       |
+| ----------------------- | --------------------------------------------- |
+| `results.append()`      | Store evaluation metrics for each model.      |
+| `pd.DataFrame(results)` | Create a comparison table of all models.      |
+| `sort_values()`         | Rank models according to performance metrics. |
+
+---
+
+## 7. Final Model Selection
+
+**Key Components**
+
+| Code                           | Purpose                                         |
+| ------------------------------ | ----------------------------------------------- |
+| Validation metrics             | Compare model generalization performance.       |
+| Train vs Validation comparison | Detect overfitting.                             |
+| Performance table              | Select the final forecasting model objectively. |
+
+---
+
+## 8. Model Persistence
+
+**Key Components**
+
+| Code                             | Purpose                          |
+| -------------------------------- | -------------------------------- |
+| `joblib.dump(preprocessor, ...)` | Save the preprocessing pipeline. |
+| `joblib.dump(xgb_model, ...)`    | Save the trained XGBoost model.  |
+
+---
+
+### Libraries Used
+
+| Library          | Purpose                                                             |
+| ---------------- | ------------------------------------------------------------------- |
+| **Pandas**       | Data loading, manipulation, and result storage                      |
+| **NumPy**        | Numerical computations                                              |
+| **Scikit-learn** | Preprocessing, regression models, evaluation metrics, and pipelines |
+| **XGBoost**      | Gradient boosting regression                                        |
+| **Joblib**       | Model serialization                                                 |
+
+---
+
+
+

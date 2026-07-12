@@ -146,3 +146,27 @@ All notable changes to this project will be documented in this file.
 ### Notes
 Completed preprocessing workflow and prepared the project for model development.
 
+## Phase 6 – Model Development
+
+### Added
+
+* Baseline forecasting using Dummy Regressor.
+* Linear Regression benchmark model.
+* Random Forest regression model with hyperparameter experiments.
+* XGBoost regression model for final forecasting.
+* Unified model evaluation pipeline using MAE, RMSE, and R².
+* Model comparison table for objective performance analysis.
+* Final model persistence using Joblib.
+
+### Improved
+
+* Established a standardized workflow for training and evaluating regression models.
+* Selected the best-performing model based on temporal validation.
+* Documented model development decisions and hyperparameter experiments.
+
+### Results
+
+* Final model: **XGBoost**
+* Validation R²: **0.729**
+* Validation RMSE: **1619.77**
+* Approximate RMSE reduction over baseline: **48%**
